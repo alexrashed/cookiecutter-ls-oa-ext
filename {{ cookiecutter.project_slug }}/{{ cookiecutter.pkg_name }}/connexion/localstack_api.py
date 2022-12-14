@@ -4,7 +4,7 @@ from connexion.apis.flask_api import FlaskSecurityHandlerFactory
 from connexion.apis import flask_utils
 from connexion.jsonifier import Jsonifier
 from localstack.extensions.api.http import Request, Response
-from werkzeug.routing import RuleFactory
+from werkzeug.routing import Rule
 from {{ cookiecutter.pkg_name }}.encoder import JSONEncoder
 import logging
 

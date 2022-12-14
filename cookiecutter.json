@@ -3,9 +3,9 @@
     "github_handle": "janedoe",
     "version": "0.0.1",
     "api_name": "Pet Store",
-    "openapi_file": "example-spec.yaml",
-    "project_short_description": "LocalStack {{ cookiecutter.api_name }} extension",
-    "project_slug": "localstack-{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
-    "pkg_name": "{{ cookiecutter.project_slug|replace('-', '') }}",
-    "extension_class": "Local{{ cookiecutter.project_name|title|replace(' ', '') }}Extension"
+    "openapi_url": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore-expanded.yaml",
+    "project_short_description": "A LocalStack extension to emulate {{ cookiecutter.api_name }}",
+    "project_slug": "localstack-{{ cookiecutter.api_name|lower|replace(' ', '-') }}",
+    "pkg_name": "{{ cookiecutter.project_slug|replace('-', '_') }}",
+    "extension_class": "Local{{ cookiecutter.api_name|title|replace(' ', '') }}Extension"
 }
