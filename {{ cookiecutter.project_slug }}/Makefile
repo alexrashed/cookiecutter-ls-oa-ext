@@ -18,7 +18,10 @@ clean:
 	rm -rf *.egg-info/
 
 install: venv
-	$(VENV_RUN); python setup.py develop
+	$(VENV_RUN); python -m pip install -e .
+
+install-dev: venv
+	$(VENV_RUN); python -m pip install -e .[dev]
 
 dist: venv
 	$(VENV_RUN); python setup.py sdist bdist_wheel
@@ -29,4 +32,4 @@ publish: clean-dist venv dist
 clean-dist: clean
 	rm -rf dist/
 
-.PHONY: clean clean-dist dist install publish
+.PHONY: clean clean-dist dist install install-dev publish

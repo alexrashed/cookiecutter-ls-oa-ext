@@ -11,5 +11,11 @@ rm -rf target/openapi/{{ cookiecutter.pkg_name }}/__init__.py
 rm -rf target/openapi/{{ cookiecutter.pkg_name }}/test
 mv target/openapi/{{ cookiecutter.pkg_name }}/* {{ cookiecutter.pkg_name }}/
 rm -rf target
-echo "Setting up python project..."
-make clean clean-dist install dist
+echo "Setting up python venv..."
+make clean clean-dist install-dev
+echo "Cleaning up code..."
+source .venv/bin/activate
+isort .
+black .
+echo "Creating the dist..."
+make dist

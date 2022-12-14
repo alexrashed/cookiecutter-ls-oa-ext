@@ -1,12 +1,14 @@
-from connexion.apis.abstract import AbstractAPI
-from connexion.lifecycle import ConnexionRequest, ConnexionResponse
-from connexion.apis.flask_api import FlaskSecurityHandlerFactory
+import logging
+
 from connexion.apis import flask_utils
+from connexion.apis.abstract import AbstractAPI
+from connexion.apis.flask_api import FlaskSecurityHandlerFactory
 from connexion.jsonifier import Jsonifier
+from connexion.lifecycle import ConnexionRequest, ConnexionResponse
 from localstack.extensions.api.http import Request, Response
 from werkzeug.routing import Rule
+
 from {{ cookiecutter.pkg_name }}.encoder import JSONEncoder
-import logging
 
 LOG = logging.getLogger(__name__)
 
@@ -54,12 +56,10 @@ class LocalStackApi(AbstractAPI):
             context=context_dict,
             cookies=req.cookies,
         )
-        LOG.debug('Getting data and status code',
-                     extra={
-                         'data': request.body,
-                         'data_type': type(request.body),
-                         'url': request.url
-                     })
+        LOG.debug(
+            "Getting data and status code",
+            extra={"data": request.body, "data_type": type(request.body), "url": request.url},
+        )
         return request
 
     @classmethod
@@ -78,7 +78,7 @@ class LocalStackApi(AbstractAPI):
             content_type=response.content_type,
             headers=response.headers,
             body=response.get_data() if not response.direct_passthrough else None,
-            is_streamed=response.is_streamed
+            is_streamed=response.is_streamed,
         )
 
     @classmethod
@@ -95,15 +95,16 @@ class LocalStackApi(AbstractAPI):
         return framework_response
 
     @classmethod
-    def _build_response(cls, data, mimetype, content_type=None, status_code=None, headers=None, extra_context=None):
+    def _build_response(
+        cls, data, mimetype, content_type=None, status_code=None, headers=None, extra_context=None
+    ):
         if cls._is_framework_response(data):
             # TODO this is weird?
             return data
 
-        data, status_code, serialized_mimetype = cls._prepare_body_and_status_code(data=data,
-                                                                                   mimetype=mimetype,
-                                                                                   status_code=status_code,
-                                                                                   extra_context=extra_context)
+        data, status_code, serialized_mimetype = cls._prepare_body_and_status_code(
+            data=data, mimetype=mimetype, status_code=status_code, extra_context=extra_context
+        )
         framework_response = Response()
         framework_response.status_code = status_code
         framework_response.data = data
@@ -119,8 +120,13 @@ class LocalStackApi(AbstractAPI):
 
         flask_path = flask_utils.flaskify_path(path, operation.get_path_parameter_types())
 
-        LOG.error('... Adding %s %s -> %s', method.upper(), flask_path, operation_id,
-                     extra=vars(operation))
+        LOG.info(
+            "... Adding %s %s -> %s",
+            method.upper(),
+            flask_path,
+            operation_id,
+            extra=vars(operation),
+        )
 
         function = operation.function
 

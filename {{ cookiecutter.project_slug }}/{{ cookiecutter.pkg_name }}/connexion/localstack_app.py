@@ -1,9 +1,10 @@
+import logging
+
 from connexion.apps.abstract import AbstractApp
 from flask.helpers import get_root_path
 from localstack.extensions.api.http import RouteHandler, Router
-from {{ cookiecutter.pkg_name }}.connexion.localstack_api import LocalStackApi
-import logging
 
+from {{ cookiecutter.pkg_name }}.connexion.localstack_api import LocalStackApi
 
 LOG = logging.getLogger(__name__)
 
@@ -32,4 +33,3 @@ class LocalStackApp(AbstractApp):
 
     def run(self, port=None, server=None, debug=None, host=None, **options):
         pass
-
